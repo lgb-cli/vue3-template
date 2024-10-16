@@ -1,0 +1,35 @@
+// 宽高
+.wh(@w,@h) {
+  width: @w;
+  height: @h;
+}
+// 弹性盒子
+.flex(@d,@v,@h) {
+  display: flex;
+  flex-direction: @d;
+  justify-content: @v;
+  align-items: @h;
+}
+//字体样式 
+.font(@s,@c,@w) {
+  font-size: @s;
+  color: @c;
+  font-weight: @w;
+}
+// 文字居中
+.al(@h) {
+  text-align: center;
+  line-height: @h;
+}
+// 绝对定位1
+.ps1(@top,@left) {
+  position: absolute;
+  left: @left;
+  top: @top;
+}
+// 绝对定位2
+.ps2(@bottom,@right) {
+  position: absolute;
+  bottom: @bottom;
+  right: @right;
+}
