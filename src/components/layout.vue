@@ -30,6 +30,8 @@ async function refleshHandle() {
 .container {
   position: relative;
   height: 100%;
+  transition: all 0.3s ease-in;
+  background-color: #f1f1f1;
   .main {
     position: absolute;
     top: 110px;
@@ -37,7 +39,6 @@ async function refleshHandle() {
     right: 0;
     bottom: 0;
     margin: auto;
-    background-color: #e4e4e4;
     overflow-y: auto;
     padding: 0 20px;
   }

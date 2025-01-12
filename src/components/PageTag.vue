@@ -30,7 +30,6 @@ watch(
       return;
     }
     let pathObj = newVal[newVal.length - 1];
-    console.log(newVal, 'val');
     let index = tagsList.findIndex((item) => item.path == pathObj.path);
     if (index == -1) {
       tagsList.push(pathObj);
@@ -57,7 +56,6 @@ function changePage(path, index) {
   //   behavior: 'smooth',
   //   inline: 'center',
   // });
-  console.log(path);
   router.push({ path: path });
 }
 </script>
@@ -73,6 +71,7 @@ function changePage(path, index) {
   background-color: #fff;
   overflow-x: auto;
   white-space: nowrap;
+  transition: all 0.3s ease-in;
   &::-webkit-scrollbar {
     display: none;
   }

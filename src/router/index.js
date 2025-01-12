@@ -8,16 +8,17 @@ import {
 import {
 	getLocalItem,
 	setLocalItem,
-	deleteLocalItem
 } from "../utils/localData"
 import getRoutes from "../api/getRoute"
+import {
+	useLogout
+} from '../utils/auth.ts';
 import {
 	flatTree
 } from "../utils/tool"
 
 const modulesPage =
 	import.meta.glob("../views/**/*.vue")
-console.log(modulesPage, 'modulesPage')
 const routes = [{
 		path: "/",
 		redirect: "/login",
@@ -86,29 +87,23 @@ const router = createRouter({
 	history: createWebHistory(),
 	routes,
 })
-let isAddRoute = false;
-let routeNames = {}
+let addRoutes = new Map()
 router.beforeEach((to, from, next) => {
-	console.log(to, from)
 	let role = getLocalItem("role")
 	if (to.path == "/login") {
-
-		deleteLocalItem('routesList')
-		deleteLocalItem('role')
+		useLogout()
 		deleteRoutes()
 		next()
 	} else {
 		if (role) {
-			if (!isAddRoute) {
-				isAddRoute = true
+			// 如果路由列表为空，则获取路由列表
+			if (addRoutes.size == 0) {
 				let routesList = getLocalItem('routesList')
 				if (!routesList || routesList.length === 0) {
 					getRoutes().then(res => {
 						setLocalItem('routesList', res)
 						let result = flatTree(res)
 						formatRoutes(result)
-						console.log(router.getRoutes(), 'routes')
-						console.log(to, 'to')
 						next({
 							path: to.path,
 							replace: true,
@@ -117,14 +112,11 @@ router.beforeEach((to, from, next) => {
 				} else {
 					let result = flatTree(routesList)
 					formatRoutes(result)
-					console.log(router.getRoutes(), 'routes')
-					console.log(to, 'to')
 					next({
 						path: to.path,
 						replace: true,
 					})
 				}
-
 			} else {
 				next()
 			}
@@ -132,17 +124,16 @@ router.beforeEach((to, from, next) => {
 		} else {
 			ElMessage.warning("身份识别失败，请重新登录！")
 			deleteRoutes()
-			deleteLocalItem('routesList')
-			deleteLocalItem('role')
+			useLogout()
 			setTimeout(() => {
 				next({
-					path: "/login"
+					path: "/login",
 				})
 			}, 800)
 		}
 	}
 })
-
+// 格式化路由
 function formatRoutes(list) {
 	if (!list || list.length === 0) return;
 	list.map(item => {
@@ -152,17 +143,25 @@ function formatRoutes(list) {
 				path: item.path,
 				component: () => modulesPage[item.componentUrl] ? modulesPage[item.componentUrl]() : import('../views/404.vue'),
 			}
-			router.addRoute('layout', obj)
+			if (item.noLayout) {
+				let routeResult = router.addRoute(obj)
+				addRoutes.set(item.name, routeResult)
+			} else {
+				let routeResult = router.addRoute('layout', obj)
+				addRoutes.set(item.name, routeResult)
+			}
+
 		}
 
 	})
 }
 
+// 退出登录时删除路由
 function deleteRoutes() {
-	isAddRoute = false;
-	if (Object.keys(routeNames).length == 0) return false;
-	Object.keys(routeNames).forEach(item => {
-		routeNames[item]()
+	if (addRoutes.size == 0) return false;
+	addRoutes.forEach(item => {
+		item()
 	})
+	console.log(router.getRoutes(),'退出时')
 }
 export default router

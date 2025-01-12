@@ -2,9 +2,7 @@
   <div class="page_content">
     <h2 class="page_title">表格</h2>
     <div class="table_content">
-      <el-row>
-        <el-button type="primary" @click="exportHandle">导出excel</el-button>
-      </el-row>
+
       <el-table ref="multipleTableRef" :data="tableData" border @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column type="index" width="100" align="center" fixed="left" label="序号" />
@@ -85,7 +83,7 @@ const toggleSelection = () => {
     multipleTableRef.value.toggleRowSelection(row, undefined);
   });
 };
-const handleSelectionChange = (val) => {
+const handleSelectionChange = (val: any) => {
   multipleSelection.value = val;
 };
 

@@ -93,9 +93,11 @@ function clickBar(data) {
   bottom: 0;
   top: 0;
   background-color: #324157;
+  transition: width 0.3s ease-in;
   .el-menu {
     height: calc(100% - 50px);
     border-right: none;
+    transition: width 0.3s ease-in;
   }
 
   .el-menu-item.is-active {
@@ -111,7 +113,8 @@ function clickBar(data) {
     align-items: center;
     padding-left: 10px;
     z-index: 999;
-
+    overflow: hidden;
+    white-space: nowrap;
     img {
       width: 28px;
       height: 26px;

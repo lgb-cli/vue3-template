@@ -61,7 +61,7 @@ const valueHtml = ref('');
 
 const dialogFlag = ref(false);
 
-function handleCreated(editor) {
+function handleCreated(editor: any) {
   editorRef.value = editor;
 }
 

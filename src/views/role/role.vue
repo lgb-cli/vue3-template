@@ -31,7 +31,7 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { useIndexStore } from '../../pinia/index.js';
 import { storeToRefs } from 'pinia';
@@ -57,20 +57,25 @@ const tableData = ref([
 const currentPage = ref(1);
 const pageSize = ref(10);
 
-const handleSizeChange = (val) => {
+const handleSizeChange = (val: number) => {
   pageSize.value = val;
 };
-const handleCurrentChange = (val) => {
+const handleCurrentChange = (val: number) => {
   currentPage.value = val;
 };
 function addRole() {}
-function getTag(id) {
+type RoleType = {
+  id: number;
+  label: string;
+};
+function getTag(routesList: Array<RoleType>, id: number): string {
   let label = '';
-  routesList.map((item) => {
-    if (item.id == id) {
-      label = item.label;
-    }
-  });
+  routesList.length &&
+    routesList.map((item) => {
+      if (item.id == id) {
+        label = item.label;
+      }
+    });
   return label;
 }
 </script>

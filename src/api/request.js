@@ -1,8 +1,7 @@
 import axios from 'axios';
-
+console.log(import.meta.env.VITE_BASE_URL, 'baseURL')
 const request = axios.create({
-  baseURL: import.meta.env.PROD ?
-    import.meta.env.VITE_PRO_BASE_URL : import.meta.env.VITE_DEV_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -26,6 +25,7 @@ function requestFun(method, url, data, config) {
     headers: {
       'Content-Type': config && config.contentType || 'application/json',
     },
+    responseType: config && config.responseType || 'json',
   });
 }
 export default requestFun;

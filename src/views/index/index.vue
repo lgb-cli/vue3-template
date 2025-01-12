@@ -32,54 +32,68 @@
   </div>
 </template>
 
-<script setup>
-import { nextTick, ref } from 'vue'
-import { Present, GoldMedal, HotWater, Discount } from '@element-plus/icons-vue'
-import * as echarts from 'echarts'
-import { sexOptions, ageOptions, moneyOptions } from '../../echarts/options'
-const active = ref('')
+<script setup lang="ts">
+import { nextTick, ref } from 'vue';
+import {
+  Present,
+  GoldMedal,
+  HotWater,
+  Discount,
+} from '@element-plus/icons-vue';
+import * as echarts from 'echarts';
+import { sexOptions, ageOptions, moneyOptions } from '../../echarts/options';
+const active = ref('');
 
-const listCount = [
+interface ListType {
+  text: string;
+  icon: any;
+  value: number;
+  class: string;
+}
+
+const listCount: Array<ListType> = [
   {
     text: '当天总人数：',
     value: 2000,
     class: 'green',
-    icon: Present
-  }, {
+    icon: Present,
+  },
+  {
     text: '本周总人数：',
     value: 5000,
     class: 'blue',
-    icon: GoldMedal
-  }, {
+    icon: GoldMedal,
+  },
+  {
     text: '当月总人数：',
     value: 10000,
     class: 'red',
-    icon: HotWater
-  }, {
+    icon: HotWater,
+  },
+  {
     text: '本季度总人数：',
     value: 200000,
     class: 'yellow',
-    icon: Discount
-  }
-]
+    icon: Discount,
+  },
+];
 const setActive = function (index) {
-  active.value = index
-}
+  active.value = index;
+};
 
 nextTick(() => {
-  const weather = echarts.init(document.getElementById('box-weather'))
-  const peoplebox = echarts.init(document.getElementById('box-people'))
-  const totalbox = echarts.init(document.getElementById('box-total'))
-  weather.setOption(moneyOptions)
-  peoplebox.setOption(sexOptions)
-  totalbox.setOption(ageOptions)
-})
-
+  const weather = echarts.init(document.getElementById('box-weather'));
+  const peoplebox = echarts.init(document.getElementById('box-people'));
+  const totalbox = echarts.init(document.getElementById('box-total'));
+  weather.setOption(moneyOptions);
+  peoplebox.setOption(sexOptions);
+  totalbox.setOption(ageOptions);
+});
 </script>
 
 <style lang="less" scoped>
-@import url("../../style/common.less");
-@import url("../../style/minxin.less");
+@import url('../../style/common.less');
+@import url('../../style/minxin.less');
 
 .cards {
   display: flex;
@@ -115,9 +129,7 @@ nextTick(() => {
       border-radius: 6px;
       .font(36px, #fff, 400);
     }
-
   }
-
 }
 
 #box-people,
@@ -128,4 +140,5 @@ nextTick(() => {
 #box-total {
   width: 100%;
   height: 420px;
-}</style>
+}
+</style>

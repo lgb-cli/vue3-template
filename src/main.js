@@ -21,7 +21,9 @@ import './style/common.less'
 
 import installFun from './utils/install'
 
-
+console.log(
+  import.meta.env.VITE_APP_TITLE, 'mode')
+console.log(import.meta.env.VITE_BASE_URL, 'baseURL')
 
 const pinia = createPinia()
 

@@ -126,16 +126,17 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  background-color: #e8e8e8;
+  // background-color: #e8e8e8;
   box-sizing: border-box;
   border-bottom: 1px solid #d0d0d0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-
+  transition: all 0.3s ease-in;
   .left-box {
     display: flex;
     align-items: center;
     .btn {
       margin: 0 10px;
+      cursor: pointer;
     }
   }
   .tools {
